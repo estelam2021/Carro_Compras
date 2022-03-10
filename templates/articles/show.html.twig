@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title%} {{ article.name }} {% endblock %}
+
+{% block body %}
+
+    </br>
+    <img
+    title="{{article.name}}"    
+    alt="Producto",
+    style="width:30%",  
+    height ="310px",
+    class="mx-auto d-block",    
+    class="card-img-top", 
+    src="{{ asset('imagen/productos/'~article.imagen) }}" 
+    >
+  <h1>Nombre: {{ article.name }}</h1>
+  <p>Precio: ${{ article.precio | number_format(2) }}</p>
+  <p>Descripción: {{ article.descripcion }}</p>
+<hr>
+  <a href="{{ path('article_list') }}" class="btn btn-primary mt-3">Volver</a>
+{% endblock %}
+

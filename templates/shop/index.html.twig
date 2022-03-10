@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tienda!{% endblock %}
+
+{% block body %}
+<br>
+<h3>Artículos disponibles</h3>
+ <div class="container">
+        <br>
+        <div class="row">
+            {% if article_shop %}
+         
+                {%  for article in article_shop %}
+                    <div class ="col-3">
+                            <div class ="card">
+                               <img
+                                title="{{article.name}}"
+                                alt="Titulo" 
+                                class="card-img-top" 
+                                src="{{asset('imagen/productos/'~article.imagen)}}" 
+                                data-toggle="popover"
+                                data-trigger="hover"
+                                data-content="{{article.descripcion}}"
+                                height ="280px"
+                                >
+                                
+                                <div class="card-body">
+                                    <span>{{article.name}}</span>
+                                    <h5 class="card-title">${{article.precio | number_format(2)}}</h5>
+                                    <form action="{{path('add_product', {'id' : article.id})}}" method="POST" id="agregarAlCarrito" class="fl">
+                                        <div class="input-group mb-3">
+                                        Cantidad:&nbsp;
+                                        <input type="number" name="cantidad" id="qty_input" class="form-control form-control-sm"   value="1" min="1" max="{{ article.cantidad }}">
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                        Tallas:&nbsp;
+                                        <select name="talla" autofocus>
+                                            {% for t in tallas %}
+                                                <option value="{{ t.id }}"
+                                                {% if t.id == 1 %}
+                                                    selected
+                                                {% endif %}
+                                                >{{ t.descTallas }}
+                                                </option>
+                                            {% endfor %}                                            
+                                        </select>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                        Color:&nbsp;
+                                        <select name="color" autofocus>
+                                            {% for c in color %}
+                                                <option value="{{ c.id }}"
+                                                {% if c.id == 1 %}
+                                                    selected
+                                                {% endif %}
+                                                >{{ c.descColor }}
+                                                </option>
+                                            {% endfor %}                                            
+                                        </select>
+                                        </div>
+
+                                        
+                                        <button type="submit" class="btn btn-primary col-md-12 text-center">Agregar al Carrito</button>
+                                    </form>
+                                </div>
+                          </div>
+                                      
+                    <br>
+                    </div>
+                {% endfor %}   
+            {% else %}
+                <p>No hay artículos</p>
+            {% endif %}
+        </div>
+    </div>    
+    <script>
+            $(function () {
+            $('[data-toggle="popover"]').popover()
+            })
+    </script>
+{% endblock %}
